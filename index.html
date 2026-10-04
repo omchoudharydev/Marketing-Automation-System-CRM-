@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Automation System CRM - Data Alcott Systems</title>
+  <!-- Google Font & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon"><i class="fa-solid fa-bullhorn"></i></div>
+        <div class="brand-info">
+          <h2>MarketPulse</h2>
+          <span class="sub-brand">Data Alcott CRM</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="nav-item active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-tab="campaigns">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Campaigns</span>
+        </button>
+        <button class="nav-item" data-tab="templates">
+          <i class="fa-solid fa-envelope-open-text"></i>
+          <span>Email Templates</span>
+        </button>
+        <button class="nav-item" data-tab="subscribers">
+          <i class="fa-solid fa-users"></i>
+          <span>Subscribers</span>
+        </button>
+        <button class="nav-item" data-tab="analytics">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Analytics & ROI</span>
+        </button>
+        <button class="nav-item" data-tab="workflows">
+          <i class="fa-solid fa-diagram-project"></i>
+          <span>Workflows</span>
+        </button>
+        <button class="nav-item" data-tab="landing-pages">
+          <i class="fa-solid fa-desktop"></i>
+          <span>Landing Pages</span>
+        </button>
+        <button class="nav-item" data-tab="reports">
+          <i class="fa-solid fa-file-invoice"></i>
+          <span>Reports</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="system-status-box">
+          <div class="pulse-indicator"></div>
+          <div>
+            <p class="status-title">Engine Active</p>
+            <p class="status-desc">No DB Required (In-Memory)</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Navigation Bar -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <button class="btn-icon mobile-menu-btn" id="menuToggleBtn" title="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-group">
+            <h1 id="pageHeading">Dashboard Overview</h1>
+            <p class="breadcrumbs">CRM / Marketing Automation / <span id="currentBreadcrumb">Dashboard</span></p>
+          </div>
+        </div>
+
+        <div class="top-bar-right">
+          <button class="btn-theme-toggle" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+            <i class="fa-regular fa-moon" id="themeIcon"></i>
+          </button>
+
+          <button class="btn btn-secondary" onclick="openABModal()">
+            <i class="fa-solid fa-flask"></i> A/B Test
+          </button>
+
+          <button class="btn btn-primary" onclick="openCampaignModal()">
+            <i class="fa-solid fa-plus"></i> New Campaign
+          </button>
+
+          <div class="user-profile-badge" onclick="openAuthModal()">
+            <div class="avatar" id="navUserAvatar">DA</div>
+            <div class="user-meta">
+              <span class="user-name" id="navUserName">Alex Turner</span>
+              <span class="user-role" id="navUserRole">Lead Marketer</span>
+            </div>
+            <i class="fa-solid fa-chevron-down caret-icon"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- App Main Content Sections -->
+      <main class="content-container">
+
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab-pane active">
+          <!-- Metric Highlights -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Total Campaigns</span>
+                <div class="metric-icon red"><i class="fa-solid fa-bullseye"></i></div>
+              </div>
+              <h3 id="statTotalCampaigns">12</h3>
+              <p class="metric-delta positive"><i class="fa-solid fa-arrow-trend-up"></i> +2 this month</p>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Active Subscribers</span>
+                <div class="metric-icon dark"><i class="fa-solid fa-user-check"></i></div>
+              </div>
+              <h3 id="statActiveSubscribers">32,840</h3>
+              <p class="metric-delta positive"><i class="fa-solid fa-arrow-trend-up"></i> +14.2% growth</p>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Average Open Rate</span>
+                <div class="metric-icon red"><i class="fa-solid fa-envelope-open"></i></div>
+              </div>
+              <h3 id="statAvgOpenRate">46.5%</h3>
+              <p class="metric-delta positive"><i class="fa-solid fa-arrow-trend-up"></i> +3.1% benchmark</p>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Average Click Rate</span>
+                <div class="metric-icon dark"><i class="fa-solid fa-hand-pointer"></i></div>
+              </div>
+              <h3 id="statAvgClickRate">14.8%</h3>
+              <p class="metric-delta positive"><i class="fa-solid fa-arrow-trend-up"></i> Industry avg: 9.8%</p>
+            </div>
+          </div>
+
+          <!-- Charts Grid -->
+          <div class="charts-two-col">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3 class="panel-title">Campaign Engagement Overview</h3>
+                  <p class="panel-subtitle">Audience open vs click performance trends</p>
+                </div>
+                <span class="badge badge-light">2026 Live Data</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="performanceChart"></canvas>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3 class="panel-title">Subscriber Growth Dynamics</h3>
+                  <p class="panel-subtitle">New subscribers segmented by intake channels</p>
+                </div>
+                <span class="badge badge-light">Monthly</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="growthChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Campaigns Quick View -->
+          <div class="panel mt-4">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">Live & Scheduled Operations</h3>
+                <p class="panel-subtitle">Immediate active marketing sequences</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="switchTab('campaigns')">
+                View All <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Campaign</th>
+                    <th>Audience Segment</th>
+                    <th>Dispatch Date</th>
+                    <th>Status</th>
+                    <th>Engagement Rates</th>
+                    <th>Quick Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardCampaignsTableBody">
+                  <!-- Populated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAMPAIGNS TAB -->
+        <section id="campaigns" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header flex-wrap">
+              <div>
+                <h3 class="panel-title">Campaign Directory</h3>
+                <p class="panel-subtitle">Manage, duplicate, draft, and launch multi-channel marketing campaigns</p>
+              </div>
+              <div class="table-actions">
+                <div class="search-input-wrap">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="campaignSearchInput" placeholder="Search campaign by name..." oninput="handleCampaignFilter()">
+                </div>
+                <select id="campaignStatusFilter" class="form-select" onchange="handleCampaignFilter()">
+                  <option value="all">All Statuses</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="scheduled">Scheduled</option>
+                  <option value="draft">Draft</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+                <button class="btn btn-primary" onclick="openCampaignModal()">
+                  <i class="fa-solid fa-plus"></i> New Campaign
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Name / Channel</th>
+                    <th>Status</th>
+                    <th>Target Audience</th>
+                    <th>Scheduled Date</th>
+                    <th>Open Rate</th>
+                    <th>Click Rate</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="campaignsTableBody">
+                  <!-- Populated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- EMAIL TEMPLATES TAB -->
+        <section id="templates" class="tab-pane">
+          <div class="panel-header mb-4">
+            <div>
+              <h3 class="panel-title">Email Template Library</h3>
+              <p class="panel-subtitle">Production-ready, responsive email marketing templates</p>
+            </div>
+            <button class="btn btn-primary" onclick="openCreateTemplateModal()">
+              <i class="fa-solid fa-plus"></i> Design New Template
+            </button>
+          </div>
+
+          <div class="templates-grid" id="templatesGrid">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- SUBSCRIBERS TAB -->
+        <section id="subscribers" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header flex-wrap">
+              <div>
+                <h3 class="panel-title">Audience & Contact Records</h3>
+                <p class="panel-subtitle">Target customer profiles, engagement status, and segments</p>
+              </div>
+              <div class="table-actions">
+                <div class="search-input-wrap">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="subscriberSearchInput" placeholder="Search by name or email..." oninput="renderSubscribers()">
+                </div>
+                <select id="subscriberSegmentFilter" class="form-select" onchange="renderSubscribers()">
+                  <option value="all">All Segments</option>
+                  <option value="VIP Customers">VIP Customers</option>
+                  <option value="Engaged Subscribers">Engaged Subscribers</option>
+                  <option value="Newsletter Leads">Newsletter Leads</option>
+                  <option value="Trial Users">Trial Users</option>
+                </select>
+                <button class="btn btn-secondary" onclick="exportSubscribersCSV()">
+                  <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
+                <button class="btn btn-primary" onclick="openSubscriberModal()">
+                  <i class="fa-solid fa-user-plus"></i> Add Contact
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Contact Details</th>
+                    <th>Audience Segment</th>
+                    <th>Subscription Date</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="subscribersTableBody">
+                  <!-- Populated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ANALYTICS TAB -->
+        <section id="analytics" class="tab-pane">
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Total Emails Dispatched</span>
+                <div class="metric-icon red"><i class="fa-solid fa-paper-plane"></i></div>
+              </div>
+              <h3>184,520</h3>
+              <p class="metric-delta positive">99.4% Delivery Success Rate</p>
+            </div>
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Unique Link Clicks</span>
+                <div class="metric-icon dark"><i class="fa-solid fa-arrow-pointer"></i></div>
+              </div>
+              <h3>27,310</h3>
+              <p class="metric-delta positive">14.8% Click-to-Deliver</p>
+            </div>
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Bounce Rate</span>
+                <div class="metric-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              </div>
+              <h3>0.58%</h3>
+              <p class="metric-delta positive">Healthy sender score</p>
+            </div>
+            <div class="metric-card">
+              <div class="metric-header">
+                <span>Attributed Revenue</span>
+                <div class="metric-icon dark"><i class="fa-solid fa-dollar-sign"></i></div>
+              </div>
+              <h3 id="calcAttributedRevenue">$42,910</h3>
+              <p class="metric-delta positive">ROI Ratio 4.6x</p>
+            </div>
+          </div>
+
+          <div class="charts-two-col mt-4">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3 class="panel-title">24-Hour Engagement Heat</h3>
+                  <p class="panel-subtitle">Email open timing distribution for scheduled dispatches</p>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="hourlyHeatChart"></canvas>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3 class="panel-title">Audience Device Breakdown</h3>
+                  <p class="panel-subtitle">Client environments utilized by subscribers</p>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="deviceChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive ROI Calculator Widget -->
+          <div class="panel mt-4">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title"><i class="fa-solid fa-calculator text-primary"></i> Interactive Campaign ROI Simulator</h3>
+                <p class="panel-subtitle">Estimate email campaign revenue conversion based on send volumes</p>
+              </div>
+            </div>
+            <div class="calculator-grid">
+              <div class="calc-input-box">
+                <label>Recipients Count</label>
+                <input type="number" id="calcRecipients" class="form-input" value="10000" oninput="calculateSimulatedROI()">
+              </div>
+              <div class="calc-input-box">
+                <label>Expected Click-to-Open %</label>
+                <input type="number" id="calcClickRate" class="form-input" value="12" oninput="calculateSimulatedROI()">
+              </div>
+              <div class="calc-input-box">
+                <label>Checkout Conversion %</label>
+                <input type="number" id="calcConvRate" class="form-input" value="3.5" oninput="calculateSimulatedROI()">
+              </div>
+              <div class="calc-input-box">
+                <label>Average Order Value ($)</label>
+                <input type="number" id="calcAOV" class="form-input" value="75" oninput="calculateSimulatedROI()">
+              </div>
+            </div>
+            <div class="calc-summary-banner mt-3">
+              <div>
+                <span class="text-muted">Estimated Direct Conversions:</span>
+                <strong id="calcResultOrders" class="ms-2">42 orders</strong>
+              </div>
+              <div>
+                <span class="text-muted">Projected Gross Revenue:</span>
+                <strong id="calcResultRevenue" class="ms-2 text-primary font-lg">$3,150.00</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WORKFLOWS TAB -->
+        <section id="workflows" class="tab-pane">
+          <div class="panel-header mb-4">
+            <div>
+              <h3 class="panel-title">Automated Journey Builder</h3>
+              <p class="panel-subtitle">Configure trigger-based drip campaign sequences</p>
+            </div>
+            <button class="btn btn-primary" onclick="openNewWorkflowPrompt()">
+              <i class="fa-solid fa-plus"></i> Add New Workflow
+            </button>
+          </div>
+
+          <div class="workflows-container" id="workflowsContainer">
+            <!-- Dynamic Workflows Rendered Here -->
+          </div>
+        </section>
+
+        <!-- LANDING PAGES TAB -->
+        <section id="landing-pages" class="tab-pane">
+          <div class="panel-header mb-4">
+            <div>
+              <h3 class="panel-title">Landing Page Designer</h3>
+              <p class="panel-subtitle">Rapid campaign landing page builder and instant preview</p>
+            </div>
+          </div>
+
+          <div class="landing-builder-layout">
+            <div class="builder-sidebar">
+              <div class="panel">
+                <h4 class="mb-3">Page Content Editor</h4>
+                <div class="form-group mb-3">
+                  <label class="form-label">Headline Title</label>
+                  <input type="text" id="lpInputTitle" class="form-input" value="Unlock Scalable Growth for Your Brand in 2026">
+                </div>
+                <div class="form-group mb-3">
+                  <label class="form-label">Subheading Description</label>
+                  <textarea id="lpInputSubtitle" class="form-input" rows="3">Discover automated marketing sequences that double subscriber engagement with zero engineering overhead.</textarea>
+                </div>
+                <div class="form-group mb-3">
+                  <label class="form-label">Call To Action Button Text</label>
+                  <input type="text" id="lpInputCta" class="form-input" value="Claim Your Free Strategy Audit">
+                </div>
+                <div class="form-group mb-3">
+                  <label class="form-label">Theme Accent Color</label>
+                  <div class="color-picker-row">
+                    <button class="color-dot bg-red" onclick="changeLpColor('#DC2626')"></button>
+                    <button class="color-dot bg-dark" onclick="changeLpColor('#1E293B')"></button>
+                    <button class="color-dot bg-emerald" onclick="changeLpColor('#059669')"></button>
+                    <button class="color-dot bg-indigo" onclick="changeLpColor('#4F46E5')"></button>
+                  </div>
+                </div>
+                <button class="btn btn-primary w-100" onclick="updateLandingPageLivePreview()">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Refresh Preview
+                </button>
+              </div>
+            </div>
+
+            <div class="builder-preview-canvas">
+              <div class="browser-mockup">
+                <div class="browser-header">
+                  <span class="browser-dot red"></span>
+                  <span class="browser-dot yellow"></span>
+                  <span class="browser-dot green"></span>
+                  <div class="browser-address">https://campaigns.dataalcott.com/promo-2026</div>
+                </div>
+                <div class="lp-render-area" id="lpRenderArea">
+                  <div class="lp-hero-box" id="lpHeroBox">
+                    <span class="lp-tag">Exclusive Marketing Accelerator</span>
+                    <h2 id="lpDisplayTitle">Unlock Scalable Growth for Your Brand in 2026</h2>
+                    <p id="lpDisplaySubtitle">Discover automated marketing sequences that double subscriber engagement with zero engineering overhead.</p>
+                    <div class="lp-cta-row">
+                      <input type="email" placeholder="Enter work email..." class="lp-cta-input">
+                      <button class="lp-cta-button" id="lpDisplayBtn">Claim Your Free Strategy Audit</button>
+                    </div>
+                    <span class="lp-security-note"><i class="fa-solid fa-lock"></i> No credit card required. 14-day full platform access.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- REPORTS TAB -->
+        <section id="reports" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header flex-wrap">
+              <div>
+                <h3 class="panel-title">Campaign Performance Reports</h3>
+                <p class="panel-subtitle">Generate presentation-ready audit logs and analytics summaries</p>
+              </div>
+              <div class="table-actions">
+                <button class="btn btn-secondary" onclick="exportSubscribersCSV()">
+                  <i class="fa-solid fa-file-csv"></i> Download CSV Export
+                </button>
+                <button class="btn btn-primary" onclick="window.print()">
+                  <i class="fa-solid fa-file-pdf"></i> Export to PDF / Print
+                </button>
+              </div>
+            </div>
+
+            <div class="report-summary-box">
+              <div class="report-meta-row">
+                <div>
+                  <strong>Report Subject:</strong> Q3/Q4 Enterprise Marketing Automation Audit
+                </div>
+                <div>
+                  <strong>Generated At:</strong> <span id="reportGenDate">October 2026</span>
+                </div>
+                <div>
+                  <strong>Organization:</strong> Data Alcott Systems - Marketing Division
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive mt-3">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Campaign Entity</th>
+                    <th>Classification</th>
+                    <th>Audience Pool</th>
+                    <th>Dispatched Status</th>
+                    <th>Open Rate</th>
+                    <th>Click Rate</th>
+                    <th>Efficiency Score</th>
+                  </tr>
+                </thead>
+                <tbody id="reportsTableBody">
+                  <!-- Populated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- 1. Campaign Modal (Create / Edit) -->
+  <div class="modal-overlay" id="campaignModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="campaignModalTitle">Create Marketing Campaign</h3>
+        <button class="modal-close-btn" onclick="closeCampaignModal()">&times;</button>
+      </div>
+      <form id="campaignForm" onsubmit="handleCampaignSubmit(event)">
+        <input type="hidden" id="campaignFormId">
+        <div class="form-group mb-3">
+          <label class="form-label">Campaign Name *</label>
+          <input type="text" id="campaignName" class="form-input" placeholder="e.g. Black Friday Special 2026" required>
+        </div>
+        <div class="form-row mb-3">
+          <div class="form-group">
+            <label class="form-label">Campaign Type</label>
+            <select id="campaignType" class="form-select">
+              <option value="Email Campaign">Email Campaign</option>
+              <option value="Newsletter Digest">Newsletter Digest</option>
+              <option value="Promotional Blast">Promotional Blast</option>
+              <option value="Lifecycle Sequence">Lifecycle Sequence</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Audience Segment</label>
+            <select id="campaignAudience" class="form-select">
+              <option value="All Subscribers">All Subscribers</option>
+              <option value="Engaged Subscribers">Engaged Subscribers</option>
+              <option value="VIP Customers">VIP Customers</option>
+              <option value="Newsletter Leads">Newsletter Leads</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row mb-3">
+          <div class="form-group">
+            <label class="form-label">Dispatch Status</label>
+            <select id="campaignStatus" class="form-select">
+              <option value="draft">Draft</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Scheduled Send Date</label>
+            <input type="date" id="campaignSentDate" class="form-input" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeCampaignModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="campaignFormSubmitBtn">Save Campaign</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Email Template Preview Modal -->
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="previewModalTitle">Email Preview</h3>
+          <p class="modal-subtitle" id="previewModalSubject">Subject: ...</p>
+        </div>
+        <button class="modal-close-btn" onclick="closePreviewModal()">&times;</button>
+      </div>
+      <div class="preview-mode-bar">
+        <span class="text-muted">Viewing Mode:</span>
+        <button class="btn btn-secondary btn-sm" onclick="setPreviewDevice('desktop')"><i class="fa-solid fa-desktop"></i> Desktop</button>
+        <button class="btn btn-secondary btn-sm" onclick="setPreviewDevice('mobile')"><i class="fa-solid fa-mobile-screen"></i> Mobile</button>
+        <button class="btn btn-primary btn-sm ms-auto" onclick="sendSimulatedTestEmail()"><i class="fa-solid fa-paper-plane"></i> Send Test to Me</button>
+      </div>
+      <div class="email-mockup-viewport" id="previewViewport">
+        <div class="email-frame-content" id="previewRenderBody">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Subscriber Modal (Add / Edit) -->
+  <div class="modal-overlay" id="subscriberModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="subscriberModalTitle">Add New Subscriber</h3>
+        <button class="modal-close-btn" onclick="closeSubscriberModal()">&times;</button>
+      </div>
+      <form id="subscriberForm" onsubmit="handleSubscriberSubmit(event)">
+        <input type="hidden" id="subscriberFormId">
+        <div class="form-group mb-3">
+          <label class="form-label">Full Name *</label>
+          <input type="text" id="subscriberName" class="form-input" placeholder="e.g. Jane Doe" required>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label">Email Address *</label>
+          <input type="email" id="subscriberEmail" class="form-input" placeholder="e.g. jane@domain.com" required>
+        </div>
+        <div class="form-row mb-3">
+          <div class="form-group">
+            <label class="form-label">Audience Segment</label>
+            <select id="subscriberSegment" class="form-select">
+              <option value="Engaged Subscribers">Engaged Subscribers</option>
+              <option value="VIP Customers">VIP Customers</option>
+              <option value="Newsletter Leads">Newsletter Leads</option>
+              <option value="Trial Users">Trial Users</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select id="subscriberStatus" class="form-select">
+              <option value="active">Active</option>
+              <option value="unsubscribed">Unsubscribed</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeSubscriberModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Subscriber</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Simulated A/B Testing Modal -->
+  <div class="modal-overlay" id="abModal">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3>A/B Split Test Laboratory</h3>
+          <p class="modal-subtitle">Compare two subject line variations to optimize open rates</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeABModal()">&times;</button>
+      </div>
+      <div class="ab-grid">
+        <div class="ab-card">
+          <div class="ab-badge variant-a">Variant A (Control)</div>
+          <div class="form-group mb-3">
+            <label class="form-label">Subject Headline</label>
+            <input type="text" id="abSubjectA" class="form-input" value="⚡ Summer Deals are here: Save 30% today!">
+          </div>
+          <div class="ab-metrics">
+            <p>Projected Open Rate: <strong>41.2%</strong></p>
+            <p>Estimated Clicks: <strong>1,120</strong></p>
+          </div>
+        </div>
+        <div class="ab-card">
+          <div class="ab-badge variant-b">Variant B (Challenger)</div>
+          <div class="form-group mb-3">
+            <label class="form-label">Subject Headline</label>
+            <input type="text" id="abSubjectB" class="form-input" value="Your exclusive summer VIP discount is expiring...">
+          </div>
+          <div class="ab-metrics">
+            <p>Projected Open Rate: <strong>49.8%</strong></p>
+            <p>Estimated Clicks: <strong>1,640</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 p-3 bg-subtle rounded">
+        <strong>Prediction Engine Verdict:</strong> Variant B achieves <strong>+20.8%</strong> higher click-through intent due to personalized urgency.
+      </div>
+      <div class="modal-footer mt-4">
+        <button class="btn btn-secondary" onclick="closeABModal()">Close</button>
+        <button class="btn btn-primary" onclick="applyABWinner()">Deploy Variant B to Campaign</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. User Profile / Simulated Auth Modal -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>User Profile & Authentication</h3>
+        <button class="modal-close-btn" onclick="closeAuthModal()">&times;</button>
+      </div>
+      <div class="auth-box">
+        <div class="avatar-large" id="modalUserAvatar">DA</div>
+        <div class="form-group mb-3 text-start">
+          <label class="form-label">Display Name</label>
+          <input type="text" id="userDisplayNameInput" class="form-input" value="Alex Turner">
+        </div>
+        <div class="form-group mb-3 text-start">
+          <label class="form-label">Role Title</label>
+          <input type="text" id="userRoleInput" class="form-input" value="Senior Marketing Strategist">
+        </div>
+        <div class="form-group mb-3 text-start">
+          <label class="form-label">Organization Email</label>
+          <input type="email" id="userEmailInput" class="form-input" value="alex@dataalcott.com">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="resetToDemoDefaults()">Restore Demo Defaults</button>
+        <button class="btn btn-primary" onclick="saveUserProfile()">Save Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div id="toastNotification" class="toast-notification"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
